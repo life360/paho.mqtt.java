@@ -433,7 +433,7 @@ public class MqttAsyncClient implements IMqttAsyncClient {
 	 */
 	public MqttAsyncClient(String serverURI, String clientId, MqttClientPersistence persistence,
 			MqttPingSender pingSender, ScheduledExecutorService executorService) throws MqttException {
-		final String methodName = "MqttAsyncClient";
+		final String methodName = "MqttAsyncClient";/*L360 CHANGE*/log.info(CLASS_NAME, methodName,"(L360) MqttAsyncClient");
 
 		log.setResourceName(clientId);
 
@@ -605,7 +605,7 @@ public class MqttAsyncClient implements IMqttAsyncClient {
 			throw new MqttException(MqttException.REASON_CODE_CLIENT_DISCONNECTING);
 		}
 		if (comms.isClosed()) {
-			throw new MqttException(MqttException.REASON_CODE_CLIENT_CLOSED);
+			/*L360 CHANGE*/log.severe(CLASS_NAME, methodName,"(L360) Ignoring - REASON_CODE_CLIENT_CLOSED"); return null;//throw new MqttException(MqttException.REASON_CODE_CLIENT_CLOSED);
 		}
 		if (options == null) {
 			options = new MqttConnectOptions();
@@ -1272,10 +1272,10 @@ public class MqttAsyncClient implements IMqttAsyncClient {
 			throw ExceptionHelper.createMqttException(MqttException.REASON_CODE_CLIENT_CONNECTED);
 		}
 		if (comms.isConnecting()) {
-			throw new MqttException(MqttException.REASON_CODE_CONNECT_IN_PROGRESS);
+			/*L360 CHANGE*/log.severe(CLASS_NAME, methodName,"(L360) Ignoring - REASON_CODE_CONNECT_IN_PROGRESS");stopReconnectCycle();return;//throw new MqttException(MqttException.REASON_CODE_CONNECT_IN_PROGRESS);
 		}
 		if (comms.isDisconnecting()) {
-			throw new MqttException(MqttException.REASON_CODE_CLIENT_DISCONNECTING);
+			/*L360 CHANGE*/log.severe(CLASS_NAME, methodName,"(L360) Ignoring - REASON_CODE_CLIENT_DISCONNECTING");return;//throw new MqttException(MqttException.REASON_CODE_CLIENT_DISCONNECTING);
 		}
 		if (comms.isClosed()) {
 			throw new MqttException(MqttException.REASON_CODE_CLIENT_CLOSED);
